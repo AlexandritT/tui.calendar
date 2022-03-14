@@ -335,6 +335,7 @@ module.exports = function(baseController, layoutContainer, dragHandler, options,
 
     return {
         view: weekView,
+        detailView: detailView,
         refresh: function() {
             var weekViewHeight = weekView.getViewBound().height,
                 daynameViewHeight = domutil.getBCRect(

@@ -1704,6 +1704,7 @@ Calendar.prototype.changeView = function(newViewName, force) {
     this._openCreationPopup = created.openCreationPopup;
     this._showCreationPopup = created.showCreationPopup;
     this._hideMoreView = created.hideMoreView;
+    this._detailView = created.detailView;
 
     this.move();
     this.render();
@@ -1887,6 +1888,10 @@ Calendar.prototype.setCalendars = function(calendars) {
     this._controller.setCalendars(calendars);
 
     this.render();
+};
+
+Calendar.prototype.getDetailView = function() {
+    return this._detailView;
 };
 
 /**

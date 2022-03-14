@@ -332,6 +332,7 @@ export default class Calendar {
     public getDate(): TZDate;
     public getDateRangeEnd(): TZDate;
     public getDateRangeStart(): TZDate;
+    public getDetailView(): any;
     public getElement(scheduleId: string, calendarId: string): Element;
     public getOptions(): IOptions;
     public getSchedule(scheduleId: string, calendarId: string): ISchedule;
