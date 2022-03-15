@@ -1,7 +1,7 @@
 /*!
  * TOAST UI Calendar
- * @version 1.15.3 | Mon Mar 14 2022
- * @author NHN FE Development Lab <dl_javascript@nhn.com>
+ * @version 1.15.3 | Tue Mar 15 2022
+ * @author NHN FE Development Lab <dl_javascript@nhn.com> (original package), Ritlabs SRL (fork and further modification)
  * @license MIT
  */
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -10329,8 +10329,6 @@ module.exports = Week;
  */
 
 
-var GA_TRACKING_ID = 'UA-129951699-1';
-
 var util = __webpack_require__(/*! tui-code-snippet */ "tui-code-snippet"),
     Handlebars = __webpack_require__(/*! handlebars-template-loader/runtime */ "./node_modules/handlebars-template-loader/runtime/index.js");
 var dw = __webpack_require__(/*! ../common/dw */ "./src/js/common/dw.js");
@@ -10806,7 +10804,6 @@ var mmin = Math.min;
  * @property {boolean} [disableDblClick=false] - Disable double click to create a schedule. The default value is false.
  * @property {boolean} [disableClick=false] - Disable click to create a schedule. The default value is false.
  * @property {boolean} [isReadOnly=false] - {@link Calendar} is read-only mode and a user can't create and modify any schedule. The default value is false.
- * @property {boolean} [usageStatistics=true] - Let us know the hostname. If you don't want to send the hostname, please set to false.
  * @property {Array.<Timezone>} [timezones] - This property will be deprecated. (since version 1.13) Please use timezone property.
  */
 
@@ -10879,17 +10876,6 @@ var mmin = Math.min;
  * });
  */
 function Calendar(container, options) {
-    options = util.extend(
-        {
-            usageStatistics: true
-        },
-        options
-    );
-
-    if (options.usageStatistics === true && util.sendHostname) {
-        util.sendHostname('calendar', GA_TRACKING_ID);
-    }
-
     if (util.isString(container)) {
         container = document.querySelector(container);
     }
@@ -12510,7 +12496,7 @@ function createMonthView(baseController, layoutContainer, dragHandler, options) 
 
     // binding popup for schedules creation
     if (options.useCreationPopup) {
-        createView = new ScheduleCreationPopup(layoutContainer, baseController.calendars, options.usageStatistics);
+        createView = new ScheduleCreationPopup(layoutContainer, baseController.calendars);
 
         onSaveNewSchedule = function(scheduleData) {
             creationHandler.fire('beforeCreateSchedule', util.extend(scheduleData, {
@@ -12899,7 +12885,7 @@ module.exports = function(baseController, layoutContainer, dragHandler, options,
 
     // binding create schedules event
     if (options.useCreationPopup) {
-        createView = new ScheduleCreationPopup(layoutContainer, baseController.calendars, options.usageStatistics);
+        createView = new ScheduleCreationPopup(layoutContainer, baseController.calendars);
 
         onSaveNewSchedule = function(scheduleData) {
             util.extend(scheduleData, {
@@ -21838,9 +21824,8 @@ var MAX_WEEK_OF_MONTH = 6;
  * @extends {View}
  * @param {HTMLElement} container - container element
  * @param {Array.<Calendar>} calendars - calendar list used to create new schedule
- * @param {boolean} usageStatistics - GA tracking options in Calendar
  */
-function ScheduleCreationPopup(container, calendars, usageStatistics) {
+function ScheduleCreationPopup(container, calendars) {
     View.call(this, container);
     /**
      * @type {FloatingLayer}
@@ -21856,7 +21841,6 @@ function ScheduleCreationPopup(container, calendars, usageStatistics) {
     this._schedule = null;
     this.calendars = calendars;
     this._focusedDropdown = null;
-    this._usageStatistics = usageStatistics;
     this._onClickListeners = [
         this._selectDropdownMenuItem.bind(this),
         this._toggleDropdownMenuView.bind(this),
@@ -22451,10 +22435,8 @@ ScheduleCreationPopup.prototype._createDatepicker = function() {
         },
         format: isAllDay ? 'yyyy-MM-dd' : 'yyyy-MM-dd HH:mm',
         timepicker: isAllDay ? null : {
-            showMeridiem: false,
-            usageStatistics: this._usageStatistics
-        },
-        usageStatistics: this._usageStatistics
+            showMeridiem: false
+        }
     });
     this.rangePicker.on('change:start', function() {
         this._setDatepickerState({start: this.rangePicker.getStartDate()});

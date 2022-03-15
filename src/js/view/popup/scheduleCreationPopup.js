@@ -23,9 +23,8 @@ var MAX_WEEK_OF_MONTH = 6;
  * @extends {View}
  * @param {HTMLElement} container - container element
  * @param {Array.<Calendar>} calendars - calendar list used to create new schedule
- * @param {boolean} usageStatistics - GA tracking options in Calendar
  */
-function ScheduleCreationPopup(container, calendars, usageStatistics) {
+function ScheduleCreationPopup(container, calendars) {
     View.call(this, container);
     /**
      * @type {FloatingLayer}
@@ -41,7 +40,6 @@ function ScheduleCreationPopup(container, calendars, usageStatistics) {
     this._schedule = null;
     this.calendars = calendars;
     this._focusedDropdown = null;
-    this._usageStatistics = usageStatistics;
     this._onClickListeners = [
         this._selectDropdownMenuItem.bind(this),
         this._toggleDropdownMenuView.bind(this),
@@ -636,10 +634,8 @@ ScheduleCreationPopup.prototype._createDatepicker = function() {
         },
         format: isAllDay ? 'yyyy-MM-dd' : 'yyyy-MM-dd HH:mm',
         timepicker: isAllDay ? null : {
-            showMeridiem: false,
-            usageStatistics: this._usageStatistics
-        },
-        usageStatistics: this._usageStatistics
+            showMeridiem: false
+        }
     });
     this.rangePicker.on('change:start', function() {
         this._setDatepickerState({start: this.rangePicker.getStartDate()});
