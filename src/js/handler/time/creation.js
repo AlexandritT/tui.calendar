@@ -251,7 +251,8 @@ TimeCreation.prototype._createSchedule = function(eventData) {
         start: new TZDate(start),
         end: new TZDate(end),
         guide: this.guide,
-        triggerEventName: eventData.triggerEvent
+        triggerEventName: eventData.triggerEvent,
+        initEventData: eventData
     });
 };
 

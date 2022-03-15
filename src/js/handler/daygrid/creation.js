@@ -167,7 +167,8 @@ DayGridCreation.prototype._createSchedule = function(scheduleData) {
         start: start,
         end: end,
         guide: this.guide,
-        triggerEventName: scheduleData.triggerEvent
+        triggerEventName: scheduleData.triggerEvent,
+        initEventData: scheduleData
     });
 };
 

@@ -1,6 +1,6 @@
 /*!
  * TOAST UI Calendar
- * @version 1.15.5 | Tue Mar 15 2022
+ * @version 1.15.7 | Tue Mar 15 2022
  * @author NHN FE Development Lab <dl_javascript@nhn.com> (original package), Ritlabs SRL (fork and further modification)
  * @license MIT
  */
@@ -13499,7 +13499,8 @@ DayGridCreation.prototype._createSchedule = function(scheduleData) {
         start: start,
         end: end,
         guide: this.guide,
-        triggerEventName: scheduleData.triggerEvent
+        triggerEventName: scheduleData.triggerEvent,
+        initEventData: scheduleData
     });
 };
 
@@ -17997,7 +17998,8 @@ TimeCreation.prototype._createSchedule = function(eventData) {
         start: new TZDate(start),
         end: new TZDate(end),
         guide: this.guide,
-        triggerEventName: eventData.triggerEvent
+        triggerEventName: eventData.triggerEvent,
+        initEventData: eventData
     });
 };
 
