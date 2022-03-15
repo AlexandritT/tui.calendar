@@ -355,4 +355,5 @@ export default class Calendar {
     public updateSchedule(scheduleId: string, calendarId: string, scheduleData: ISchedule, silent?: boolean): void;
     public off(eventName?: string | object | EventHandlerType, handler?: EventHandlerType | string): void;
     public on(event: CustomEventType | IEvents, handler?: EventHandlerType): void;
+    public fire(event: CustomEventType | IEvents, ...data: any[])
 }
