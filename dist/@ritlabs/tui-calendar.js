@@ -1,6 +1,6 @@
 /*!
  * TOAST UI Calendar
- * @version 1.15.7 | Tue Mar 15 2022
+ * @version 1.15.8 | Tue Apr 12 2022
  * @author NHN FE Development Lab <dl_javascript@nhn.com> (original package), Ritlabs SRL (fork and further modification)
  * @license MIT
  */
@@ -9163,6 +9163,10 @@ Base.prototype.updateSchedule = function(schedule, options) {
         schedule.set('isReadOnly', options.isReadOnly);
     }
 
+    if (!util.isUndefined(options.disableDrag)) {
+        schedule.set('disableDrag', options.disableDrag);
+    }
+
     if (!util.isUndefined(options.isPrivate)) {
         schedule.set('isPrivate', options.isPrivate);
     }
@@ -10369,6 +10373,7 @@ var mmin = Math.min;
  * @property {boolean} [isVisible] - The schedule visibility flag
  * @property {boolean} [isReadOnly] - The schedule read-only flag
  * @property {boolean} [isPrivate] - The private schedule
+ * @property {boolean} [disableDrag] - Disable schedule's dragging and resizing flag
  * @property {string} [color] - The schedule text color
  * @property {string} [bgColor] - The schedule background color
  * @property {string} [dragBgColor] - The schedule background color when dragging it
@@ -12921,6 +12926,10 @@ module.exports = function(baseController, layoutContainer, dragHandler, options,
                 eventData.schedule = util.extend({}, eventData.schedule, {isReadOnly: true});
             }
 
+            if (options.disableDrag) {
+                eventData.schedule = util.extend({}, eventData.schedule, {disableDrag: true});
+            }
+
             detailView.render(eventData);
         };
         onDeleteSchedule = function(eventData) {
@@ -13972,7 +13981,7 @@ DayGridMove.prototype._onDragStart = function(dragStartEventData) {
         return;
     }
 
-    if (targetModel.isReadOnly) {
+    if (targetModel.isReadOnly || targetModel.disableDrag) {
         return;
     }
 
@@ -16577,7 +16586,7 @@ MonthMove.prototype._onDragStart = function(dragStartEvent) {
         model = this.baseController.schedules.items[modelID],
         scheduleData;
 
-    if (!modelID || !model || model.isReadOnly || model.isPending) {
+    if (!modelID || !model || model.isReadOnly || model.disableDrag || model.isPending) {
         return;
     }
 
@@ -18600,7 +18609,7 @@ TimeMove.prototype._onDragStart = function(dragStartEventData) {
     targetModelID = domutil.getData(blockElement, 'id');
     targetModel = ctrl.schedules.items[targetModelID];
 
-    if (targetModel.isReadOnly) {
+    if (targetModel.isReadOnly || targetModel.disableDrag) {
         return;
     }
 
@@ -19836,6 +19845,12 @@ function Schedule() {
     this.isPrivate = false;
 
     /**
+     * disable dragging and resizing
+     * @type {boolean}
+     */
+    this.disableDrag = false;
+
+    /**
      * location
      * @type {string}
      */
@@ -19937,6 +19952,7 @@ Schedule.prototype.init = function(options) {
     this.isPending = options.isPending || false;
     this.isFocused = options.isFocused || false;
     this.isReadOnly = options.isReadOnly || false;
+    this.disableDrag = options.disableDrag || false;
     this.goingDuration = options.goingDuration || 0;
     this.comingDuration = options.comingDuration || 0;
     this.state = options.state || '';

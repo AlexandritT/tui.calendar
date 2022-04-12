@@ -290,7 +290,7 @@ Base.prototype.updateSchedule = function(schedule, options) {
     }
 
     if (!util.isUndefined(options.disableDrag)) {
-        schedule.set('disableDrag', options.disableDrag)
+        schedule.set('disableDrag', options.disableDrag);
     }
 
     if (!util.isUndefined(options.isPrivate)) {

@@ -269,6 +269,10 @@ module.exports = function(baseController, layoutContainer, dragHandler, options,
                 eventData.schedule = util.extend({}, eventData.schedule, {isReadOnly: true});
             }
 
+            if (options.disableDrag) {
+                eventData.schedule = util.extend({}, eventData.schedule, {disableDrag: true});
+            }
+
             detailView.render(eventData);
         };
         onDeleteSchedule = function(eventData) {
