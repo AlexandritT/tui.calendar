@@ -21,8 +21,10 @@
     {{else}}
     <div class="{{CSS_PREFIX}}section-button">
       <button class="{{CSS_PREFIX}}popup-edit"><span class="{{CSS_PREFIX}}icon {{CSS_PREFIX}}ic-edit"></span><span class="{{CSS_PREFIX}}content">{{{popupEdit-tmpl}}}</span></button>
+      {{#unless schedule.disableDelete}}
       <div class="{{CSS_PREFIX}}popup-vertical-line"></div>
-      <button class="{{CSS_PREFIX}}popup-delete" {{#if schedule.disableDelete}}disabled{{/if}}><span class="{{CSS_PREFIX}}icon {{CSS_PREFIX}}ic-delete"></span><span class="{{CSS_PREFIX}}content">{{{popupDelete-tmpl}}}</span></button>
+      <button class="{{CSS_PREFIX}}popup-delete" {{#if schedule.disableDelete}}style="width:100%;"{{/if}}><span class="{{CSS_PREFIX}}icon {{CSS_PREFIX}}ic-delete"></span><span class="{{CSS_PREFIX}}content">{{{popupDelete-tmpl}}}</span></button>
+      {{/unless}}
     </div>
     {{/if}}
   </div>

@@ -1694,6 +1694,8 @@ Calendar.prototype.changeView = function(newViewName, force) {
     this._hideMoreView = created.hideMoreView;
     this._detailView = created.detailView;
 
+    console.log(created);
+
     this.move();
     this.render();
 };

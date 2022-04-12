@@ -252,7 +252,8 @@ function createMonthView(baseController, layoutContainer, dragHandler, options) 
             if (moreView) {
                 moreView.hide();
             }
-        }
+        },
+        detailView: detailView
     };
 }
 
