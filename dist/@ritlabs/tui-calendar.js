@@ -1,6 +1,6 @@
 /*!
  * TOAST UI Calendar
- * @version 1.15.8 | Tue Apr 12 2022
+ * @version 1.15.12 | Tue Apr 12 2022
  * @author NHN FE Development Lab <dl_javascript@nhn.com> (original package), Ritlabs SRL (fork and further modification)
  * @license MIT
  */
@@ -9167,6 +9167,10 @@ Base.prototype.updateSchedule = function(schedule, options) {
         schedule.set('disableDrag', options.disableDrag);
     }
 
+    if (!util.isUndefined(options.disableDelete)) {
+        schedule.set('disableDrag', options.disableDelete);
+    }
+
     if (!util.isUndefined(options.isPrivate)) {
         schedule.set('isPrivate', options.isPrivate);
     }
@@ -10374,6 +10378,7 @@ var mmin = Math.min;
  * @property {boolean} [isReadOnly] - The schedule read-only flag
  * @property {boolean} [isPrivate] - The private schedule
  * @property {boolean} [disableDrag] - Disable schedule's dragging and resizing flag
+ * @property {boolean} [disableDelete] - Disable "Delete" button in popup for this schedule
  * @property {string} [color] - The schedule text color
  * @property {string} [bgColor] - The schedule background color
  * @property {string} [dragBgColor] - The schedule background color when dragging it
@@ -19851,6 +19856,11 @@ function Schedule() {
     this.disableDrag = false;
 
     /**
+     * disable delete button in popup
+     */
+    this.disableDelete = false;
+
+    /**
      * location
      * @type {string}
      */
@@ -19953,6 +19963,7 @@ Schedule.prototype.init = function(options) {
     this.isFocused = options.isFocused || false;
     this.isReadOnly = options.isReadOnly || false;
     this.disableDrag = options.disableDrag || false;
+    this.disableDelete = options.disableDelete || false;
     this.goingDuration = options.goingDuration || 0;
     this.comingDuration = options.comingDuration || 0;
     this.state = options.state || '';
@@ -24226,7 +24237,7 @@ module.exports = (Handlebars['default'] || Handlebars).template({"1":function(co
     + "\">"
     + ((stack1 = (lookupProperty(helpers,"allday-tmpl")||(depth0 && lookupProperty(depth0,"allday-tmpl"))||alias4).call(alias3,(depth0 != null ? lookupProperty(depth0,"model") : depth0),{"name":"allday-tmpl","hash":{},"data":data,"loc":{"start":{"line":29,"column":47},"end":{"line":29,"column":70}}})) != null ? stack1 : "")
     + "</span>\n            "
-    + ((stack1 = lookupProperty(helpers,"unless").call(alias3,(lookupProperty(helpers,"or")||(depth0 && lookupProperty(depth0,"or"))||alias4).call(alias3,((stack1 = (data && lookupProperty(data,"root"))) && lookupProperty(stack1,"isReadOnly")),((stack1 = (depth0 != null ? lookupProperty(depth0,"model") : depth0)) != null ? lookupProperty(stack1,"isReadOnly") : stack1),{"name":"or","hash":{},"data":data,"loc":{"start":{"line":30,"column":22},"end":{"line":30,"column":60}}}),{"name":"unless","hash":{},"fn":container.program(21, data, 0),"inverse":container.noop,"data":data,"loc":{"start":{"line":30,"column":12},"end":{"line":30,"column":194}}})) != null ? stack1 : "")
+    + ((stack1 = lookupProperty(helpers,"unless").call(alias3,(lookupProperty(helpers,"or")||(depth0 && lookupProperty(depth0,"or"))||alias4).call(alias3,(lookupProperty(helpers,"or")||(depth0 && lookupProperty(depth0,"or"))||alias4).call(alias3,((stack1 = (data && lookupProperty(data,"root"))) && lookupProperty(stack1,"isReadOnly")),((stack1 = (depth0 != null ? lookupProperty(depth0,"model") : depth0)) != null ? lookupProperty(stack1,"isReadOnly") : stack1),{"name":"or","hash":{},"data":data,"loc":{"start":{"line":30,"column":26},"end":{"line":30,"column":64}}}),((stack1 = (depth0 != null ? lookupProperty(depth0,"model") : depth0)) != null ? lookupProperty(stack1,"disableDrag") : stack1),{"name":"or","hash":{},"data":data,"loc":{"start":{"line":30,"column":22},"end":{"line":30,"column":83}}}),{"name":"unless","hash":{},"fn":container.program(21, data, 0),"inverse":container.noop,"data":data,"loc":{"start":{"line":30,"column":12},"end":{"line":30,"column":217}}})) != null ? stack1 : "")
     + "\n        </div>\n";
 },"11":function(container,depth0,helpers,partials,data) {
     var helper, lookupProperty = container.lookupProperty || function(parent, propertyName) {
@@ -24297,7 +24308,7 @@ module.exports = (Handlebars['default'] || Handlebars).template({"1":function(co
     };
 
   return "<span class=\""
-    + alias1(((helper = (helper = lookupProperty(helpers,"CSS_PREFIX") || (depth0 != null ? lookupProperty(depth0,"CSS_PREFIX") : depth0)) != null ? helper : container.hooks.helperMissing),(typeof helper === "function" ? helper.call(depth0 != null ? depth0 : (container.nullContext || {}),{"name":"CSS_PREFIX","hash":{},"data":data,"loc":{"start":{"line":30,"column":75},"end":{"line":30,"column":89}}}) : helper)))
+    + alias1(((helper = (helper = lookupProperty(helpers,"CSS_PREFIX") || (depth0 != null ? lookupProperty(depth0,"CSS_PREFIX") : depth0)) != null ? helper : container.hooks.helperMissing),(typeof helper === "function" ? helper.call(depth0 != null ? depth0 : (container.nullContext || {}),{"name":"CSS_PREFIX","hash":{},"data":data,"loc":{"start":{"line":30,"column":98},"end":{"line":30,"column":112}}}) : helper)))
     + "weekday-resize-handle handle-y\" style=\"line-height: "
     + alias1(container.lambda(((stack1 = (data && lookupProperty(data,"root"))) && lookupProperty(stack1,"scheduleHeight")), depth0))
     + "px;\">&nbsp;</span>";
@@ -24955,15 +24966,19 @@ module.exports = (Handlebars['default'] || Handlebars).template({"1":function(co
     + alias4(((helper = (helper = lookupProperty(helpers,"CSS_PREFIX") || (depth0 != null ? lookupProperty(depth0,"CSS_PREFIX") : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"CSS_PREFIX","hash":{},"data":data,"loc":{"start":{"line":24,"column":18},"end":{"line":24,"column":32}}}) : helper)))
     + "popup-vertical-line\"></div>\n      <button class=\""
     + alias4(((helper = (helper = lookupProperty(helpers,"CSS_PREFIX") || (depth0 != null ? lookupProperty(depth0,"CSS_PREFIX") : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"CSS_PREFIX","hash":{},"data":data,"loc":{"start":{"line":25,"column":21},"end":{"line":25,"column":35}}}) : helper)))
-    + "popup-delete\"><span class=\""
-    + alias4(((helper = (helper = lookupProperty(helpers,"CSS_PREFIX") || (depth0 != null ? lookupProperty(depth0,"CSS_PREFIX") : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"CSS_PREFIX","hash":{},"data":data,"loc":{"start":{"line":25,"column":62},"end":{"line":25,"column":76}}}) : helper)))
+    + "popup-delete\" "
+    + ((stack1 = lookupProperty(helpers,"if").call(alias1,((stack1 = (depth0 != null ? lookupProperty(depth0,"schedule") : depth0)) != null ? lookupProperty(stack1,"disableDelete") : stack1),{"name":"if","hash":{},"fn":container.program(16, data, 0),"inverse":container.noop,"data":data,"loc":{"start":{"line":25,"column":49},"end":{"line":25,"column":94}}})) != null ? stack1 : "")
+    + "><span class=\""
+    + alias4(((helper = (helper = lookupProperty(helpers,"CSS_PREFIX") || (depth0 != null ? lookupProperty(depth0,"CSS_PREFIX") : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"CSS_PREFIX","hash":{},"data":data,"loc":{"start":{"line":25,"column":108},"end":{"line":25,"column":122}}}) : helper)))
     + "icon "
-    + alias4(((helper = (helper = lookupProperty(helpers,"CSS_PREFIX") || (depth0 != null ? lookupProperty(depth0,"CSS_PREFIX") : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"CSS_PREFIX","hash":{},"data":data,"loc":{"start":{"line":25,"column":81},"end":{"line":25,"column":95}}}) : helper)))
+    + alias4(((helper = (helper = lookupProperty(helpers,"CSS_PREFIX") || (depth0 != null ? lookupProperty(depth0,"CSS_PREFIX") : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"CSS_PREFIX","hash":{},"data":data,"loc":{"start":{"line":25,"column":127},"end":{"line":25,"column":141}}}) : helper)))
     + "ic-delete\"></span><span class=\""
-    + alias4(((helper = (helper = lookupProperty(helpers,"CSS_PREFIX") || (depth0 != null ? lookupProperty(depth0,"CSS_PREFIX") : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"CSS_PREFIX","hash":{},"data":data,"loc":{"start":{"line":25,"column":126},"end":{"line":25,"column":140}}}) : helper)))
+    + alias4(((helper = (helper = lookupProperty(helpers,"CSS_PREFIX") || (depth0 != null ? lookupProperty(depth0,"CSS_PREFIX") : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"CSS_PREFIX","hash":{},"data":data,"loc":{"start":{"line":25,"column":172},"end":{"line":25,"column":186}}}) : helper)))
     + "content\">"
-    + ((stack1 = ((helper = (helper = lookupProperty(helpers,"popupDelete-tmpl") || (depth0 != null ? lookupProperty(depth0,"popupDelete-tmpl") : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"popupDelete-tmpl","hash":{},"data":data,"loc":{"start":{"line":25,"column":149},"end":{"line":25,"column":171}}}) : helper))) != null ? stack1 : "")
+    + ((stack1 = ((helper = (helper = lookupProperty(helpers,"popupDelete-tmpl") || (depth0 != null ? lookupProperty(depth0,"popupDelete-tmpl") : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"popupDelete-tmpl","hash":{},"data":data,"loc":{"start":{"line":25,"column":195},"end":{"line":25,"column":217}}}) : helper))) != null ? stack1 : "")
     + "</span></button>\n    </div>\n";
+},"16":function(container,depth0,helpers,partials,data) {
+    return "disabled";
 },"compiler":[8,">= 4.3.0"],"main":function(container,depth0,helpers,partials,data) {
     var stack1, helper, alias1=depth0 != null ? depth0 : (container.nullContext || {}), alias2=container.hooks.helperMissing, alias3="function", alias4=container.escapeExpression, alias5=container.lambda, lookupProperty = container.lookupProperty || function(parent, propertyName) {
         if (Object.prototype.hasOwnProperty.call(parent, propertyName)) {
@@ -25263,7 +25278,7 @@ module.exports = (Handlebars['default'] || Handlebars).template({"1":function(co
     + "\">"
     + ((stack1 = (lookupProperty(helpers,"schedule-tmpl")||(depth0 && lookupProperty(depth0,"schedule-tmpl"))||alias2).call(alias1,(depth0 != null ? lookupProperty(depth0,"model") : depth0),{"name":"schedule-tmpl","hash":{},"data":data,"loc":{"start":{"line":21,"column":87},"end":{"line":21,"column":112}}})) != null ? stack1 : "")
     + "</span>\n            "
-    + ((stack1 = lookupProperty(helpers,"unless").call(alias1,(lookupProperty(helpers,"or")||(depth0 && lookupProperty(depth0,"or"))||alias2).call(alias1,((stack1 = (data && lookupProperty(data,"root"))) && lookupProperty(stack1,"isReadOnly")),((stack1 = (depth0 != null ? lookupProperty(depth0,"model") : depth0)) != null ? lookupProperty(stack1,"isReadOnly") : stack1),{"name":"or","hash":{},"data":data,"loc":{"start":{"line":22,"column":22},"end":{"line":22,"column":60}}}),{"name":"unless","hash":{},"fn":container.program(15, data, 0),"inverse":container.noop,"data":data,"loc":{"start":{"line":22,"column":12},"end":{"line":22,"column":193}}})) != null ? stack1 : "")
+    + ((stack1 = lookupProperty(helpers,"unless").call(alias1,(lookupProperty(helpers,"or")||(depth0 && lookupProperty(depth0,"or"))||alias2).call(alias1,(lookupProperty(helpers,"or")||(depth0 && lookupProperty(depth0,"or"))||alias2).call(alias1,((stack1 = (data && lookupProperty(data,"root"))) && lookupProperty(stack1,"isReadOnly")),((stack1 = (depth0 != null ? lookupProperty(depth0,"model") : depth0)) != null ? lookupProperty(stack1,"isReadOnly") : stack1),{"name":"or","hash":{},"data":data,"loc":{"start":{"line":22,"column":26},"end":{"line":22,"column":64}}}),((stack1 = (depth0 != null ? lookupProperty(depth0,"model") : depth0)) != null ? lookupProperty(stack1,"disableDrag") : stack1),{"name":"or","hash":{},"data":data,"loc":{"start":{"line":22,"column":22},"end":{"line":22,"column":83}}}),{"name":"unless","hash":{},"fn":container.program(15, data, 0),"inverse":container.noop,"data":data,"loc":{"start":{"line":22,"column":12},"end":{"line":22,"column":216}}})) != null ? stack1 : "")
     + "\n        </div>\n    </div>\n";
 },"5":function(container,depth0,helpers,partials,data) {
     var helper, lookupProperty = container.lookupProperty || function(parent, propertyName) {
@@ -25334,7 +25349,7 @@ module.exports = (Handlebars['default'] || Handlebars).template({"1":function(co
     };
 
   return "<span class=\""
-    + alias1(((helper = (helper = lookupProperty(helpers,"CSS_PREFIX") || (depth0 != null ? lookupProperty(depth0,"CSS_PREFIX") : depth0)) != null ? helper : container.hooks.helperMissing),(typeof helper === "function" ? helper.call(depth0 != null ? depth0 : (container.nullContext || {}),{"name":"CSS_PREFIX","hash":{},"data":data,"loc":{"start":{"line":22,"column":75},"end":{"line":22,"column":89}}}) : helper)))
+    + alias1(((helper = (helper = lookupProperty(helpers,"CSS_PREFIX") || (depth0 != null ? lookupProperty(depth0,"CSS_PREFIX") : depth0)) != null ? helper : container.hooks.helperMissing),(typeof helper === "function" ? helper.call(depth0 != null ? depth0 : (container.nullContext || {}),{"name":"CSS_PREFIX","hash":{},"data":data,"loc":{"start":{"line":22,"column":98},"end":{"line":22,"column":112}}}) : helper)))
     + "weekday-resize-handle handle-y\" style=\"line-height:"
     + alias1(container.lambda(((stack1 = (data && lookupProperty(data,"root"))) && lookupProperty(stack1,"scheduleHeight")), depth0))
     + "px;\">&nbsp;</span>";
@@ -25511,7 +25526,7 @@ module.exports = (Handlebars['default'] || Handlebars).template({"1":function(co
     + "\n                </div>\n"
     + ((stack1 = lookupProperty(helpers,"if").call(alias1,(depth0 != null ? lookupProperty(depth0,"hasComingDuration") : depth0),{"name":"if","hash":{},"fn":container.program(26, data, 0),"inverse":container.noop,"data":data,"loc":{"start":{"line":47,"column":12},"end":{"line":54,"column":19}}})) != null ? stack1 : "")
     + "            </div>\n            "
-    + ((stack1 = lookupProperty(helpers,"unless").call(alias1,(lookupProperty(helpers,"or")||(depth0 && lookupProperty(depth0,"or"))||alias2).call(alias1,(depth0 != null ? lookupProperty(depth0,"croppedEnd") : depth0),(lookupProperty(helpers,"or")||(depth0 && lookupProperty(depth0,"or"))||alias2).call(alias1,((stack1 = (data && lookupProperty(data,"root"))) && lookupProperty(stack1,"isReadOnly")),((stack1 = (depth0 != null ? lookupProperty(depth0,"model") : depth0)) != null ? lookupProperty(stack1,"isReadOnly") : stack1),{"name":"or","hash":{},"data":data,"loc":{"start":{"line":56,"column":37},"end":{"line":56,"column":75}}}),{"name":"or","hash":{},"data":data,"loc":{"start":{"line":56,"column":22},"end":{"line":56,"column":76}}}),{"name":"unless","hash":{},"fn":container.program(29, data, 0),"inverse":container.noop,"data":data,"loc":{"start":{"line":56,"column":12},"end":{"line":56,"column":207}}})) != null ? stack1 : "")
+    + ((stack1 = lookupProperty(helpers,"unless").call(alias1,(lookupProperty(helpers,"or")||(depth0 && lookupProperty(depth0,"or"))||alias2).call(alias1,(depth0 != null ? lookupProperty(depth0,"croppedEnd") : depth0),(lookupProperty(helpers,"or")||(depth0 && lookupProperty(depth0,"or"))||alias2).call(alias1,(lookupProperty(helpers,"or")||(depth0 && lookupProperty(depth0,"or"))||alias2).call(alias1,((stack1 = (data && lookupProperty(data,"root"))) && lookupProperty(stack1,"isReadOnly")),((stack1 = (depth0 != null ? lookupProperty(depth0,"model") : depth0)) != null ? lookupProperty(stack1,"isReadOnly") : stack1),{"name":"or","hash":{},"data":data,"loc":{"start":{"line":56,"column":41},"end":{"line":56,"column":79}}}),((stack1 = (depth0 != null ? lookupProperty(depth0,"model") : depth0)) != null ? lookupProperty(stack1,"disableDrag") : stack1),{"name":"or","hash":{},"data":data,"loc":{"start":{"line":56,"column":37},"end":{"line":56,"column":98}}}),{"name":"or","hash":{},"data":data,"loc":{"start":{"line":56,"column":22},"end":{"line":56,"column":99}}}),{"name":"unless","hash":{},"fn":container.program(29, data, 0),"inverse":container.noop,"data":data,"loc":{"start":{"line":56,"column":12},"end":{"line":56,"column":230}}})) != null ? stack1 : "")
     + "\n        </div>\n";
 },"5":function(container,depth0,helpers,partials,data) {
     var helper, lookupProperty = container.lookupProperty || function(parent, propertyName) {
@@ -25692,7 +25707,7 @@ module.exports = (Handlebars['default'] || Handlebars).template({"1":function(co
     };
 
   return "<div class=\""
-    + alias1(((helper = (helper = lookupProperty(helpers,"CSS_PREFIX") || (depth0 != null ? lookupProperty(depth0,"CSS_PREFIX") : depth0)) != null ? helper : container.hooks.helperMissing),(typeof helper === "function" ? helper.call(depth0 != null ? depth0 : (container.nullContext || {}),{"name":"CSS_PREFIX","hash":{},"data":data,"loc":{"start":{"line":56,"column":90},"end":{"line":56,"column":104}}}) : helper)))
+    + alias1(((helper = (helper = lookupProperty(helpers,"CSS_PREFIX") || (depth0 != null ? lookupProperty(depth0,"CSS_PREFIX") : depth0)) != null ? helper : container.hooks.helperMissing),(typeof helper === "function" ? helper.call(depth0 != null ? depth0 : (container.nullContext || {}),{"name":"CSS_PREFIX","hash":{},"data":data,"loc":{"start":{"line":56,"column":113},"end":{"line":56,"column":127}}}) : helper)))
     + "time-resize-handle handle-x\" style=\"margin-left: "
     + alias1(container.lambda(((stack1 = ((stack1 = (data && lookupProperty(data,"root"))) && lookupProperty(stack1,"styles"))) && lookupProperty(stack1,"paddingLeft")), depth0))
     + ";\">&nbsp;</div>";

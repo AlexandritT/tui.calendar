@@ -293,6 +293,10 @@ Base.prototype.updateSchedule = function(schedule, options) {
         schedule.set('disableDrag', options.disableDrag);
     }
 
+    if (!util.isUndefined(options.disableDelete)) {
+        schedule.set('disableDrag', options.disableDelete);
+    }
+
     if (!util.isUndefined(options.isPrivate)) {
         schedule.set('isPrivate', options.isPrivate);
     }
