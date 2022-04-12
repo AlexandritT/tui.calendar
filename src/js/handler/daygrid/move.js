@@ -125,7 +125,7 @@ DayGridMove.prototype._onDragStart = function(dragStartEventData) {
         return;
     }
 
-    if (targetModel.isReadOnly) {
+    if (targetModel.isReadOnly || targetModel.disableDrag) {
         return;
     }
 

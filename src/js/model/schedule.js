@@ -187,6 +187,12 @@ function Schedule() {
     this.isPrivate = false;
 
     /**
+     * disable dragging and resizing
+     * @type {boolean}
+     */
+    this.disableDrag = false;
+
+    /**
      * location
      * @type {string}
      */
@@ -288,6 +294,7 @@ Schedule.prototype.init = function(options) {
     this.isPending = options.isPending || false;
     this.isFocused = options.isFocused || false;
     this.isReadOnly = options.isReadOnly || false;
+    this.disableDrag = options.disableDrag || false;
     this.goingDuration = options.goingDuration || 0;
     this.comingDuration = options.comingDuration || 0;
     this.state = options.state || '';

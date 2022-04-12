@@ -143,7 +143,7 @@ TimeMove.prototype._onDragStart = function(dragStartEventData) {
     targetModelID = domutil.getData(blockElement, 'id');
     targetModel = ctrl.schedules.items[targetModelID];
 
-    if (targetModel.isReadOnly) {
+    if (targetModel.isReadOnly || targetModel.disableDrag) {
         return;
     }
 

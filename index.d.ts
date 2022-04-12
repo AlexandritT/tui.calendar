@@ -265,6 +265,7 @@ export interface ISchedule {
     isVisible?: boolean;
     isReadOnly?: boolean;
     isPrivate?: boolean;
+    disableDrag?: boolean;
     color?: string;
     bgColor?: string;
     dragBgColor?: string;

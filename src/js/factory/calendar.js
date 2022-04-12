@@ -44,6 +44,7 @@ var mmin = Math.min;
  * @property {boolean} [isVisible] - The schedule visibility flag
  * @property {boolean} [isReadOnly] - The schedule read-only flag
  * @property {boolean} [isPrivate] - The private schedule
+ * @property {boolean} [disableDrag] - Disable schedule's dragging and resizing flag
  * @property {string} [color] - The schedule text color
  * @property {string} [bgColor] - The schedule background color
  * @property {string} [dragBgColor] - The schedule background color when dragging it
