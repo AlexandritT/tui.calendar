@@ -1,7 +1,7 @@
 {
   "name": "@ritlabs/tui-calendar",
   "author": "NHN FE Development Lab <dl_javascript@nhn.com> (original package), Ritlabs SRL (fork and further modification)",
-  "version": "1.15.15",
+  "version": "1.15.17",
   "main": "dist/@ritlabs/tui-calendar.js",
   "types": "index.d.ts",
   "license": "MIT",
