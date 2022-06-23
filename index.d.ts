@@ -209,6 +209,7 @@ export interface ITemplateConfig {
     popupDetailBody?: (schedule: ISchedule) => string;
     popupEdit?: () => string;
     popupDelete?: () => string;
+    popupCustomButtons?: () => string;
 }
 
 export interface IWeekOptions {
@@ -309,6 +310,7 @@ export interface IOptions {
     calendars?: ICalendarInfo[];
     useCreationPopup?: boolean;
     useDetailPopup?: boolean;
+    usePopupCustomButtons?: boolean;
     timezones?: ITimezone[];
     timezone?: {
         zones: ITimezone[];
