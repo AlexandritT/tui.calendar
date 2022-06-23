@@ -198,6 +198,12 @@ function Schedule() {
     this.disableDelete = false;
 
     /**
+     * use custom button set for detail popup
+     */
+
+    this.usePopupCustomButtons = false;
+
+    /**
      * location
      * @type {string}
      */
@@ -301,6 +307,7 @@ Schedule.prototype.init = function(options) {
     this.isReadOnly = options.isReadOnly || false;
     this.disableDrag = options.disableDrag || false;
     this.disableDelete = options.disableDelete || false;
+    this.usePopupCustomButtons = options.usePopupCustomButtons || false;
     this.goingDuration = options.goingDuration || 0;
     this.comingDuration = options.comingDuration || 0;
     this.state = options.state || '';

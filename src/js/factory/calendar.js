@@ -53,6 +53,7 @@ var mmin = Math.min;
  * @property {string} [customStyle] - The schedule's custom css class
  * @property {any} [raw] - The user data
  * @property {string} [state] - The schedule's state ('busy', 'free')
+ * @property {boolean} [usePopupCustomButtons] - Use custom button set for detail popup
  */
 
 /**

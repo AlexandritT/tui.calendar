@@ -1,4 +1,4 @@
-// Type definitions for TOAST UI Calendar v1.15.17
+// Type definitions for TOAST UI Calendar v1.15.24
 // TypeScript Version: 3.2.1
 
 export type DateType = string | Date | TZDate;
@@ -277,6 +277,7 @@ export interface ISchedule {
       [propName: string]: string | number | boolean | object | null;
     }
     state?: string;
+    usePopupCustomButtons?: boolean;
 }
 
 export interface ITimezone {
@@ -310,7 +311,6 @@ export interface IOptions {
     calendars?: ICalendarInfo[];
     useCreationPopup?: boolean;
     useDetailPopup?: boolean;
-    usePopupCustomButtons?: boolean;
     timezones?: ITimezone[];
     timezone?: {
         zones: ITimezone[];

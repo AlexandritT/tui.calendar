@@ -294,7 +294,11 @@ Base.prototype.updateSchedule = function(schedule, options) {
     }
 
     if (!util.isUndefined(options.disableDelete)) {
-        schedule.set('disableDrag', options.disableDelete);
+        schedule.set('disableDelete', options.disableDelete);
+    }
+
+    if (!util.isUndefined(options.usePopupCustomButtons)) {
+        schedule.set('usePopupCustomButtons', options.usePopupCustomButtons);
     }
 
     if (!util.isUndefined(options.isPrivate)) {
