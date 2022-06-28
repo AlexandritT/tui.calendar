@@ -204,6 +204,18 @@ function Schedule() {
     this.usePopupCustomButtons = false;
 
     /**
+     * Custom calendar name (which is not on the main list)
+     */
+
+    this.customCalendar = '';
+
+    /**
+     * Custom calendar color (which is not on the main list)
+     */
+
+    this.customCalendarColor = '';
+
+    /**
      * location
      * @type {string}
      */
@@ -307,6 +319,8 @@ Schedule.prototype.init = function(options) {
     this.isReadOnly = options.isReadOnly || false;
     this.disableDrag = options.disableDrag || false;
     this.disableDelete = options.disableDelete || false;
+    this.customCalendar = options.customCalendar || '';
+    this.customCalendarColor = options.customCalendarColor || '';
     this.usePopupCustomButtons = options.usePopupCustomButtons || false;
     this.goingDuration = options.goingDuration || 0;
     this.comingDuration = options.comingDuration || 0;

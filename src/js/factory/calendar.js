@@ -46,6 +46,8 @@ var mmin = Math.min;
  * @property {boolean} [isPrivate] - The private schedule
  * @property {boolean} [disableDrag] - Disable schedule's dragging and resizing flag
  * @property {boolean} [disableDelete] - Disable "Delete" button in popup for this schedule
+ * @property {string} [customCalendar] - Custom calendar name (which is not on the main list)
+ * @property {string} [customCalendarColor] - Custom calendar color (which is not on the main list)
  * @property {string} [color] - The schedule text color
  * @property {string} [bgColor] - The schedule background color
  * @property {string} [dragBgColor] - The schedule background color when dragging it

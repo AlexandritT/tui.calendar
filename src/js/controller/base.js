@@ -301,6 +301,14 @@ Base.prototype.updateSchedule = function(schedule, options) {
         schedule.set('usePopupCustomButtons', options.usePopupCustomButtons);
     }
 
+    if (!util.isUndefined(options.customCalendar)) {
+        schedule.set('customCalendar', options.customCalendar);
+    }
+
+    if (!util.isUndefined(options.customCalendarColor)) {
+        schedule.set('customCalendarColor', options.customCalendarColor);
+    }
+
     if (!util.isUndefined(options.isPrivate)) {
         schedule.set('isPrivate', options.isPrivate);
     }
